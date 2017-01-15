@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -27,6 +28,8 @@ public class DisplayMessageActivity extends AppCompatActivity {
     String[] quotes;
     Button restart;
     Button clear;
+    MediaPlayer mp;
+    Context context = this;
     //String[] quotes = App.getContext().getResources().getStringArray(R.array.quotes_array);
 
     @Override
@@ -37,6 +40,8 @@ public class DisplayMessageActivity extends AppCompatActivity {
         quotes = getResources().getStringArray(R.array.quotes_array);
         restart = (Button)findViewById(R.id.RestartButton);
         clear = (Button)findViewById(R.id.ClearButton);
+
+        mp = MediaPlayer.create(context, R.raw.fart01);
 
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
@@ -62,6 +67,14 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
         textView.setText("");
 
+        try {
+            if (mp.isPlaying()) {
+                mp.stop();
+                mp.release();
+                mp = MediaPlayer.create(context, R.raw.fart01);
+            } mp.start();
+        } catch(Exception e) { e.printStackTrace(); }
+
         if (quotes.length > 0) {
 
             Random rand = new Random();
@@ -85,6 +98,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         Intent mainIntent = new Intent(this, App.class);
 
         startActivity(mainIntent);
+        finish();
 
     }
 

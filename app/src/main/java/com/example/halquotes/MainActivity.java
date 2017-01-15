@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_MESSAGE, message);
         //intent.putExtra(EXTRA_MESSAGE, R.string.quote1);
         startActivity(intent);
+        finish();
     }
 
 
